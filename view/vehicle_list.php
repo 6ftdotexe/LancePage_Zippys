@@ -11,8 +11,8 @@
                                 <!-- Loop through each make  -->
                                 <?php foreach ($makes as $make) : ?>
                                     <option value="
-                            <?php echo $make['makeID']; ?>"
-                                        <?= ($make['makeID'] == $makeID) ? 'selected' : ''; ?>><?php echo $make['makeName']; ?>
+                            <?php echo $make['id']; ?>"
+                                        <?= ($make['id'] == $makeID) ? 'selected' : ''; ?>><?php echo $make['name']; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -23,8 +23,8 @@
                                 <!-- Loop through each type  -->
                                 <?php foreach ($types as $type) : ?>
                                     <option value="
-                            <?php echo $type['typeID']; ?>"
-                                        <?= ($type['typeID'] == $typeID) ? 'selected' : ''; ?>><?php echo $type['typeName']; ?>
+                            <?php echo $type['id']; ?>"
+                                        <?= ($type['id'] == $typeID) ? 'selected' : ''; ?>><?php echo $type['name']; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -35,8 +35,8 @@
                                 <!-- Loop through each class  -->
                                 <?php foreach ($classes as $class) : ?>
                                     <option value="
-                        <?php echo $class['classID']; ?>"
-                                        <?= ($class['classID'] == $classID) ? 'selected' : ''; ?>><?php echo $class['className']; ?>
+                        <?php echo $class['id']; ?>"
+                                        <?= ($class['id'] == $classID) ? 'selected' : ''; ?>><?php echo $class['name']; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -109,10 +109,10 @@
                 <?php foreach ($vehicles as $vehicle) : ?>
                     <tr>
                         <td><?php echo $vehicle['year']; ?></td>
-                        <td><?php echo $vehicle['makeName']; ?></td>
+                        <td><?php echo $vehicle['name']; ?></td>
                         <td><?php echo $vehicle['model']; ?></td>
-                        <td><?php echo $vehicle['typeName']; ?></td>
-                        <td><?php echo $vehicle['className']; ?></td>
+                        <td><?php echo $vehicle['name']; ?></td>
+                        <td><?php echo $vehicle['name']; ?></td>
                         <td><?php echo '$' . number_format($vehicle['price'], 2); ?></td>
 
                     </tr>

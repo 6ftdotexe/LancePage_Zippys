@@ -23,13 +23,13 @@ function deleteType($typeID)
     $statement->closeCursor();
 }
 
-function addType($typeName)
+function addType($name)
 {
     global $db;
-    $query = 'INSERT INTO type (typeName) VALUES (:typeName)';
+    $query = 'INSERT INTO type (name) VALUES (:name)';
 
     $statement = $db->prepare($query);
-    $statement->bindValue(':typeName', $typeName);
+    $statement->bindValue(':name', $name);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -37,41 +37,39 @@ function addType($typeName)
 function getMakes()
 {
     global $db;
-    // Check if category id greater than 1, not null
+    
     $query = 'SELECT *
                 FROM makes
-                ORDER BY makeID';
+                ORDER BY id';
 
     $statement = $db->prepare($query);
     $statement->execute();
     $makes = $statement->fetchAll();
     $statement->closeCursor();
-    // print_r($makes);
-    // Return queried to do vehicles
     return $makes;
 }
 
-function deleteMake($makeID)
+function deleteMake($id)
 {
     global $db;
-    // Check if category id greater than 1, not null
+
     $query = 'DELETE FROM makes
-                WHERE makeID = :makeID';
+                WHERE id = :id';
 
     $statement = $db->prepare($query);
-    $statement->bindValue(':makeID', $makeID);
+    $statement->bindValue(':id', $id);
     $statement->execute();
     $statement->closeCursor();
 }
 
-function addMake($makeName)
+function addMake($name)
 {
     global $db;
-    // Check if category id greater than 1, not null
-    $query = 'INSERT INTO makes (makeName) VALUES (:makeName)';
+
+    $query = 'INSERT INTO makes (name) VALUES (:name)';
 
     $statement = $db->prepare($query);
-    $statement->bindValue(':makeName', $makeName);
+    $statement->bindValue(':name', $name);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -82,10 +80,10 @@ function get_vehicles($typeID, $classID, $makeID, $sort, $sortDirection)
     global $db;
     $bindValues = [];
     $bindCount = 0;
-    // Check if category id greater than 1, not null
-    $query = 'SELECT vehicleID, year, makes.makeName, model, price, type.typeName, class.className
+
+    $query = 'SELECT vehicleID, year, makes.name, model, price, type.name, class.name
                 FROM vehicles
-                LEFT JOIN makes on vehicles.makeID = makes.makeID
+                LEFT JOIN makes on vehicles.makeID = makes.id
                 LEFT JOIN type on vehicles.typeID = type.typeID
                 LEFT JOIN class on vehicles.classID = class.classID';
     if ($typeID >= 1) {
@@ -101,7 +99,7 @@ function get_vehicles($typeID, $classID, $makeID, $sort, $sortDirection)
     }
     if ($makeID >= 1) {
         $query .= $bindCount > 0 ? ' AND ' : ' WHERE ';
-        $query .= 'makes.makeID = :makeID';
+        $query .= 'makes.id = :makeID';
         array_push($bindValues, [':makeID', $makeID]);
         $bindCount++;
     }
@@ -129,14 +127,14 @@ function get_vehicles($typeID, $classID, $makeID, $sort, $sortDirection)
 }
 
 // Delete item from database
-function deleteVehicle($vehicleID)
+function deleteVehicle($id)
 {
     global $db;
     // Get item based on item ID
-    $query = 'DELETE FROM vehicles                WHERE vehicleID = :vehicleID';
+    $query = 'DELETE FROM vehicles WHERE id = :id';
     // PDO delete item from database
     $statement = $db->prepare($query);
-    $statement->bindValue(':vehicleID', $vehicleID);
+    $statement->bindValue(':id', $id);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -147,10 +145,12 @@ function addVehicle($year, $makeID, $model, $typeID, $classID, $price)
 
     global $db;
     // Set query for item to be added
-    $query = 'INSERT INTO vehicles                 (year, makeID, model, typeID, classID, price)
+    $query = 'INSERT INTO vehicles (year, makeID, model, typeID, classID, price)
               VALUES
                  (:year, :makeID, :model, :typeID, :classID, :price)';
     // PDO insert item into database
+
+
     $statement = $db->prepare($query);
     $statement->bindValue(':year', $year);
     $statement->bindValue(':makeID', $makeID);
@@ -165,7 +165,7 @@ function addVehicle($year, $makeID, $model, $typeID, $classID, $price)
 function get_classes()
 {
     global $db;
-    // Check if category id greater than 1, not null
+    
     $query = 'SELECT *
                 FROM class
                 ORDER BY classID';
@@ -178,28 +178,28 @@ function get_classes()
     return $classes;
 }
 
-function deleteClass($classID)
+function deleteClass($id)
 {
     global $db;
-    // Check if category id greater than 1, not null
+    
     $query = 'DELETE FROM class
                 WHERE classID = :classID';
 
     $statement = $db->prepare($query);
-    $statement->bindValue(':classID', $classID);
+    $statement->bindValue(':classID', $id);
     $statement->execute();
     $statement->closeCursor();
 }
 
-function addClass($className)
+function addClass($name)
 {
     global $db;
-    // Check if category id greater than 1, not null
-    $query = 'INSERT INTO class (className)
-                VALUES (:className)';
+    
+    $query = 'INSERT INTO class (name)
+                VALUES (:name)';
 
     $statement = $db->prepare($query);
-    $statement->bindValue(':className', $className);
+    $statement->bindValue(':name', $name);
     $statement->execute();
     $statement->closeCursor();
 }
